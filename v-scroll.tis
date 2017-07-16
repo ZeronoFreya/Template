@@ -1,0 +1,105 @@
+class VScroll: Behavior {
+    const SCROLL_DELTA = 5.0; // px, for mouse wheel
+    const SCROLL_DECEL = 0.95; // 减速 
+    const SCROLL_OUT_DECEL = 0.74; // 当滚动条超出左右边界时的减速
+    const SCROLL_STEP_DELAY = View.ANIMATION_TIMER_SPAN; // 毫秒
+    const SCROLL_PADDING_TOP = 20;
+    const SCROLL_PADDING_BOTTOM = 20;
+    function attached() {
+        this << event is-scroll (evt) {
+          var firstTop = this.first.box(#top, #margin, #parent);
+          var lastBottom = this.last.box(#bottom, #margin, #parent);
+          var height = this.box(#height, #inner);
+          if( lastBottom - firstTop > height )
+            this.subscribe(mousewheel, Event.MOUSE, Event.MOUSE_WHEEL);
+          else
+            this.unsubscribe(mousewheel);
+          if(firstTop==0)
+            this.scrollTo(0, -SCROLL_PADDING_TOP, false, true);
+        }
+    }
+    function mousewheel(evt) {
+
+        var v = (this.velocity || 0.0);
+        if (evt.wheelDelta < 0) {
+            //下滚(滚轮向内滚动)
+            this.velocity = v + SCROLL_DELTA;
+        } else {
+            //上滚(滚轮向外滚动)
+            this.velocity = v - SCROLL_DELTA;
+        }
+        this.doScrollAnumation();
+        return true;
+    }
+    function doScrollAnumation() {
+        if (this.state.animating) return;
+        //var (scroll_top, scroll_top, scroll_right, scroll_bottom) = 0;
+        var (scroll_top, firstTop, lastBottom, height) = 0;
+        function animationStep() {
+            
+            //当出界时,让velocity迅速的降到0.5以下
+            this.velocity *= this.isOut ? SCROLL_OUT_DECEL: SCROLL_DECEL;
+            if (Math.abs(this.velocity) < 0.5 || this.stopAnimation) {
+                this.post(: :this.scrollEnded());
+                //返回0 结束动画
+                return 0;
+            }
+            //(scroll_top, scroll_top, scroll_right, scroll_bottom) = this.scroll(#rect);
+            scroll_top = this.scroll(#top) + this.velocity.toInteger();
+
+            //stdout.println(scroll_top);
+            this.scrollTo(0, scroll_top, false, true);
+            //判断是否出界
+            firstTop = this.first.box(#top, #margin, #parent);
+            lastBottom = this.last.box(#bottom, #margin, #parent);
+            height = this.box(#height, #inner);
+            this.isOut = false;
+            if (firstTop > SCROLL_PADDING_TOP || lastBottom < height - SCROLL_PADDING_BOTTOM) this.isOut = true;
+            return SCROLL_STEP_DELAY;
+        }
+        this.animate(animationStep);
+    }
+    function scrollEnded() {
+        function animateBackLeft(distance) {
+            var scroll_y = this.scroll(#top);
+            var target_y = SCROLL_PADDING_TOP * -1;
+            var target_y_half = (scroll_y - target_y) / 2;
+
+            var v = 1;
+            this.animate(: {
+                scroll_y += v;
+                if (scroll_y >= target_y) {
+                    this.scrollTo(0, target_y, false, true);
+                    return 0;
+                }
+                this.scrollTo(0, scroll_y, false, true);
+                if (scroll_y < target_y_half) ++v;
+                else if (--v == 0) v = 1;
+                return SCROLL_STEP_DELAY;
+            });
+        }
+        function animateBackRight(distance) {
+            var scroll_y = this.scroll(#top);
+            var target_y = scroll_y - distance + SCROLL_PADDING_BOTTOM;
+            var target_y_half = scroll_y - (distance - SCROLL_PADDING_BOTTOM) / 2;
+            var v = 1;
+            this.animate(: {
+                scroll_y -= v;
+                if (scroll_y <= target_y) {
+                    this.scrollTo(0, target_y, false, true);
+                    return 0;
+                }
+                this.scrollTo(0, scroll_y, false, true);
+                if (scroll_y > target_y_half) ++v;
+                else if (--v == 0) v = 1;
+                return SCROLL_STEP_DELAY;
+            });
+        }
+        var firstTop = this.first.box(#top, #margin, #parent);
+        var lastBottom = this.last.box(#bottom, #margin, #parent);
+        var height = this.box(#height, #inner);
+        if (firstTop > SCROLL_PADDING_TOP) animateBackLeft.call(this, firstTop);
+        else if (lastBottom < height - SCROLL_PADDING_BOTTOM) animateBackRight.call(this, height - lastBottom);
+
+    }
+}

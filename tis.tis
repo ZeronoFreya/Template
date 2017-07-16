@@ -1,0 +1,17 @@
+﻿include "common.tis";
+self.ready = function() {
+    //设置窗口居中
+    setWinToCenter();
+    // var h = $(header).box(#height, #border, #view);
+    // setMinSize( 320,197.76 );
+    // 加载或刷新deBug？
+    $(#window-debug).on("click",function(){
+        Sciter.launch( "inspector.exe" );
+        view.connectToInspector($(body));
+    });
+    var ul = $(#ul);
+    for(var i=0;i<100;i++){
+        ul.$append(<li>{i}</li>);
+    }
+    ul.postEvent("is-scroll");
+}

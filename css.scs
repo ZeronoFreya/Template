@@ -1,0 +1,12 @@
+@import "common.scs";
+#ul{
+    prototype:VScroll url(v-scroll.tis);
+    /*size: 300dip;*/
+    width: *;
+    height: *;
+    border-spacing: 10dip;
+    overflow: hidden;
+}
+li{
+background: gold;
+}
