@@ -2,31 +2,30 @@
 <style type="text/css">
 footer{
     width: *;
-    line-height: 1.6em;
+    height: 1.2em;
     flow: horizontal;
 }
 footer>section {
     width: *;
-    height: *;
     text-indent: 3dip;
+    line-height: 1em;
 }
 footer>window-button {
     display: block;
     width: max-content;
     font-family: Marlett;
-    font-size: 14dip;
+    font-size: 1.2em;
     behavior: clickable;
-    padding: 10dip 0 0 10dip;
 }
 #window-resize{
     prototype: ResizeView url("resizeable-view.tis");
     text-align: right;
     vertical-align: bottom;
     cursor: se-resize;
-    line-height: 14dip;
+    font-size: 0.8em;
 }
 </style>
 <footer>
-    <section></section>
+    <section>status</section>
     <window-button #window-resize>o</window-button>
 </footer>

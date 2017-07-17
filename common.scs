@@ -18,12 +18,12 @@ html {
     overflow: hidden;
     color: @FONTCOLOR-DARK;
     background: @BGCOLOR-WHITE;
+    font-family: exo2;
+    font-size: 12pt;
+    font-rendering-mode: sub-pixel;
 }
 body {
     padding: 0 3dip 3dip 3dip;
-    font-family: exo2;
-    font-size: 14pt;
-    font-rendering-mode: sub-pixel;
 }
 ul,li{
     list-style-type: none;
