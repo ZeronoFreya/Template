@@ -2,6 +2,7 @@
 self.ready = function() {
     //设置窗口居中
     setWinToCenter();
+    view.windowTopmost = true;
     // var h = $(header).box(#height, #border, #view);
     // setMinSize( 320,197.76 );
     // 加载或刷新deBug？
