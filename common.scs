@@ -8,7 +8,7 @@
     src: url("fonts/exo2regular.ttf");
 }
 
-html,body,header,caption, h1, h2, h3, h4, h5, h6, hr,
+html,body,header,caption, widget, section, h1, h2, h3, h4, h5, h6, hr,
 p, a, blockquote, dl, dt, dd, ul,
 ol, li, pre, form, fieldset, legend,
 button, input, textarea, th, td
@@ -17,12 +17,26 @@ button, input, textarea, th, td
 html {
     overflow: hidden;
     color: @FONTCOLOR-DARK;
-    background: @BGCOLOR-WHITE;
+    background: transparent;
+    /*background: @BGCOLOR-WHITE;*/
     font-family: exo2;
     font-size: 12pt;
     font-rendering-mode: sub-pixel;
 }
 body {
+    size: *;
+    /*background: @BGCOLOR-WHITE;*/
+    padding: 5dip;
+    /*padding: 0 3dip 3dip 3dip;*/
+}
+widget#widget{
+    overflow: hidden;
+    size: *;
+    background: @BGCOLOR-WHITE;
+    box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, .2);
+}
+section#body{
+    size: *;
     padding: 0 3dip 3dip 3dip;
 }
 ul,li{
