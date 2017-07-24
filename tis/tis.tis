@@ -8,11 +8,11 @@ self.ready = function() {
     // 加载或刷新deBug？
     $(#window-debug).on("click",function(){
         Sciter.launch( "inspector.exe" );
-        view.connectToInspector($(body));
+        view.connectToInspector($(html));
     });
-    var ul = $(#ul);
-    for(var i=0;i<100;i++){
-        ul.$append(<li>{i}</li>);
-    }
-    ul.postEvent("is-scroll");
+    // var ul = $(#ul);
+    // for(var i=0;i<100;i++){
+    //     ul.$append(<li>{i}</li>);
+    // }
+    // ul.postEvent("is-scroll");
 }
