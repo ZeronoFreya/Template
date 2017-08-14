@@ -1,6 +1,8 @@
-function setWinToCenter(){
+function setWinToCenter(w=0, h=0){
     var (xs,ys,ws,hs) = view.screenBox(#workarea,#rectw);
     var (ww, hw) = view.box(#dimension, #border, #screen);
+    ww = w == 0 ? ww : w;
+    hw = h == 0 ? hw : h;
     var cx = ( ws - ww ) / 2;
     var cy = ( hs - hw ) / 2;
     view.move(cx,cy,ww,hw);

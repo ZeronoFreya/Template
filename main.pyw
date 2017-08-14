@@ -19,5 +19,5 @@ class Frame(sciter.Window):
 
 if __name__ == '__main__':
     frame = Frame()
-    frame.load_file("main.html")
+    frame.load_file("Gui/main.html")
     frame.run_app()
