@@ -28,12 +28,15 @@ body {
     /*background: @BGCOLOR-WHITE;*/
     padding: 5dip;
     /*padding: 0 3dip 3dip 3dip;*/
+    background-color:transparent;
+    background-image: url(../img/shadow.png);
+    background-repeat: expand;
+    background-position: 20 20 20 20; /*top right bottom left offsets*/
 }
 widget#widget{
     overflow: hidden;
     size: *;
     background: @BGCOLOR-WHITE;
-    box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, .2);
 }
 section#body{
     size: *;
